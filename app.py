@@ -83,6 +83,13 @@ if st.button("🎯 Recommend a Song"):
         
         # Step 5: Show similar songs
         st.markdown("### 🎶 You might also like:")
-        for i in range(1, 6):
-            row = top_songs.iloc[i]
-            st.write(f"- {row['title']} by {row['artist']}")
+        # Show up to 5 similar songs (but avoid IndexError)
+num_recs = min(5, len(top_songs) - 1)
+
+if num_recs > 0:
+    for i in range(1, num_recs + 1):
+        row = top_songs.iloc[i]
+        st.write(f"- {row['title']} by {row['artist']}")
+else:
+    st.info("No similar songs found in this genre with those preferences.")
+
